@@ -11,14 +11,57 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
+  /* Обмеження
+PRIMARY KEY - primaryKey
+UNIQUE - unique (constraint)
+CHECK - validate (validator)
+NOT NULL - allowNull (validator + constraint),
+FOREIGN KEY
+
+constraint - db
+validator - app
+*/
   Student.init(
     {
-      firstName: DataTypes.STRING,
-      lastName: DataTypes.STRING,
-      email: DataTypes.STRING,
-      birthday: DataTypes.DATE,
-      isMale: DataTypes.BOOLEAN,
-      activitiesCount: DataTypes.INTEGER,
+      firstName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          is: /^[A-Z][a-z]+$/,
+          len: [2, 64],
+        },
+      },
+      lastName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          is: /^[A-Z][a-z]+$/,
+          len: [2, 64],
+        },
+      },
+      email: {
+        type: DataTypes.STRING,
+        unique: true,
+        validate: {
+          isEmail: true,
+        },
+      },
+      birthday: {
+        type: DataTypes.DATE,
+        validate: {
+          isBefore: new Date().toISOString().split('T')[0],
+        },
+      },
+      isMale: {
+        type: DataTypes.BOOLEAN,
+      },
+      activitiesCount: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+        validate: {
+          min: 0,
+        },
+      },
     },
     {
       sequelize,
