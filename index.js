@@ -1,5 +1,11 @@
 // sync db by model
-const { sequelize, Student } = require('./models');
+const {
+  sequelize,
+  Student,
+  Group,
+  Subject,
+  StudentSubjects,
+} = require('./models');
 const { Op } = require('sequelize');
 
 // DROP TABLE IF EXISTS "Students" CASCADE;
@@ -219,4 +225,56 @@ const { Op } = require('sequelize');
 //   console.log('deletedStudCount :>> ', deletedStudCount);
 // })();
 
-(async function () {})();
+(async function () {
+  // const newGroup1 = { title: 'pe2022-1', enteredAt: '2022-01-01' };
+  // const newGroup2 = { title: 'pe2023-1', enteredAt: '2023-01-01' };
+
+  //   const createdGroup1 = await Group.create(newGroup1);
+  //   const createdGroup2 = await Group.create(newGroup2);
+
+  //   console.log(createdGroup1, createdGroup2);
+
+  // const newStudent1 = {
+  //   firstName: 'Test',
+  //   lastName: 'Testovych',
+  //   email: 'm@m1.com',
+  //   groupId: 1,
+  // };
+
+  // const newStudent2 = {
+  //   firstName: 'Test',
+  //   lastName: 'Testovych',
+  //   email: 'm@m2.com',
+  //   groupId: 1,
+  // };
+
+  // const newStudent3 = {
+  //   firstName: 'Test',
+  //   lastName: 'Testovych',
+  //   email: 'm@m3.com',
+  //   groupId: 2,
+  // };
+
+  // const createdStudent1 = await Student.create(newStudent1);
+  // const createdStudent2 = await Student.create(newStudent2);
+  // const createdStudent3 = await Student.create(newStudent3);
+  // console.log(createdStudent1, createdStudent2, createdStudent3);
+
+  // Student m:n Subject => students <= students_to_subjects => subjects
+
+  const subject1 = { title: 'Data Bases', hours: 100 };
+  const subject2 = { title: 'Web-programming', hours: 150 };
+
+  const studSubj1 = { studentId: 1, subjectId: 1, mark: 100 };
+  const studSubj2 = { studentId: 1, subjectId: 2, mark: 90 };
+  const studSubj3 = { studentId: 2, subjectId: 1, mark: 85 };
+  const studSubj4 = { studentId: 2, subjectId: 2, mark: 88 };
+
+  await Subject.create(subject1);
+  await Subject.create(subject2);
+
+  await StudentSubjects.create(studSubj1);
+  await StudentSubjects.create(studSubj2);
+  await StudentSubjects.create(studSubj3);
+  await StudentSubjects.create(studSubj4);
+})();
